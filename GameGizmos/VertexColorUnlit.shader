@@ -16,7 +16,6 @@ Category {
 		Pass {
 			SetTexture [_MainTex] {
 				combine primary
-				//return primary
 			}
 		}
 	}

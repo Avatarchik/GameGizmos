@@ -99,12 +99,17 @@ public class GameGizmos : MonoBehaviour {
         return point;
     }
 
+    private static List<Vector3> _putlist = new List<Vector3>();
+    private static List<Color32> _putlistc = new List<Color32>();
     #region Draw
     public static void DrawLine(Vector3 from, Vector3 to) {
         DrawLine(from, to, I.defaultColor);
     }
     public static void DrawLine(Vector3 from, Vector3 to, Color32 color) {
-        I.Put(new List<Vector3>() { from, to }, new List<Color32>() {color, color });
+        //I.Put(new List<Vector3>() { from, to }, new List<Color32>() {color, color });
+        _putlist.Clear(); _putlist.Add(from); _putlist.Add(to);
+        _putlistc.Clear(); _putlistc.Add(color); _putlistc.Add(color);
+        I.Put(_putlist, _putlistc);
     }
 
     public static void DrawRect(Vector3 pos, Vector3 size) {
