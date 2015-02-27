@@ -22,4 +22,3 @@ Category {
 	}
 }
 }
-// source: http://wiki.unity3d.com/index.php/VertexColorUnlit

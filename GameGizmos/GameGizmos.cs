@@ -5,7 +5,7 @@ using System.Linq;
 
 // GameGizmos.cs
 // http://slateneon.github.io/
-// 20150227
+// 20150228
 
 public class GameGizmos : MonoBehaviour {
 
@@ -43,6 +43,9 @@ public class GameGizmos : MonoBehaviour {
         PopulateMesh();
         ZeroTransform();
     }
+    void FixedUpdate() {
+        
+    }
     void OnRenderObject() {
         ClearEverything();
     }
@@ -75,12 +78,18 @@ public class GameGizmos : MonoBehaviour {
     }
     void Put(IEnumerable<Vector3> verts, IEnumerable<Color32> colors)
     {
-        dVerts = dVerts.Concat(verts).ToList();
+        //dVerts = dVerts.Concat(verts).ToList();
+        foreach (Vector3 v in verts) {
+            dVerts.Add(v);
+        }
         for (int i = 0; i < verts.Count(); i++)
         {
             dIndices.Add(dIndices.Count);
         }
-        dColors32 = dColors32.Concat(colors).ToList();
+        //dColors32 = dColors32.Concat(colors).ToList();
+        foreach (Color32 c in colors) {
+            dColors32.Add(c);
+        }
     }
     static Vector3 RotatePoint(Vector3 point, Vector3 pivot, Vector3 angle)
     {
