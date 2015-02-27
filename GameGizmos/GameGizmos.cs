@@ -5,7 +5,7 @@ using System.Linq;
 
 // GameGizmos.cs
 // http://slateneon.github.io/
-// 20150226
+// 20150227
 
 public class GameGizmos : MonoBehaviour {
 
@@ -91,13 +91,16 @@ public class GameGizmos : MonoBehaviour {
     }
 
     #region Draw
-    public static void DrawLine(Vector3 from, Vector3 to, Color32 color) {
-        I.Put(new List<Vector3>() { from, to }, new List<Color32>() {color, color });
-    }
     public static void DrawLine(Vector3 from, Vector3 to) {
         DrawLine(from, to, I.defaultColor);
     }
+    public static void DrawLine(Vector3 from, Vector3 to, Color32 color) {
+        I.Put(new List<Vector3>() { from, to }, new List<Color32>() {color, color });
+    }
 
+    public static void DrawRect(Vector3 pos, Vector3 size) {
+        DrawRect(pos, size, I.defaultColor, Vector3.zero);
+    }
     public static void DrawRect(Vector3 pos, Vector3 size, Color32 color) {
         DrawRect(pos, size, color, Vector3.zero);
     }
@@ -118,6 +121,50 @@ public class GameGizmos : MonoBehaviour {
         DrawLine(points[0], points[2], color);
         DrawLine(points[2], points[3], color);
         DrawLine(points[3], points[1], color);
+    }
+
+    public static void DrawCube(Vector3 pos, Vector3 size) {
+        DrawCube(pos, size, I.defaultColor, Vector3.zero);
+    }
+    public static void DrawCube(Vector3 pos, Vector3 size, Color32 color) {
+        DrawCube(pos, size, color, Vector3.zero);
+    }
+    public static void DrawCube(Vector3 pos, Vector3 size, Color32 color, Vector3 angle) {
+        Vector3[] points = new Vector3[8];
+        points[0] = new Vector3(pos.x + size.x / 2, pos.y + size.y / 2, pos.z + size.z / 2);
+        points[1] = new Vector3(pos.x + size.x / 2, pos.y + size.y / 2, pos.z - size.z / 2);
+        points[2] = new Vector3(pos.x - size.x / 2, pos.y + size.y / 2, pos.z + size.z / 2);
+        points[3] = new Vector3(pos.x - size.x / 2, pos.y + size.y / 2, pos.z - size.z / 2);
+
+        points[4] = new Vector3(pos.x + size.x / 2, pos.y - size.y / 2, pos.z + size.z / 2);
+        points[5] = new Vector3(pos.x + size.x / 2, pos.y - size.y / 2, pos.z - size.z / 2);
+        points[6] = new Vector3(pos.x - size.x / 2, pos.y - size.y / 2, pos.z + size.z / 2);
+        points[7] = new Vector3(pos.x - size.x / 2, pos.y - size.y / 2, pos.z - size.z / 2);
+
+        points[0] = RotatePoint(points[0], pos, angle);
+        points[1] = RotatePoint(points[1], pos, angle);
+        points[2] = RotatePoint(points[2], pos, angle);
+        points[3] = RotatePoint(points[3], pos, angle);
+        points[4] = RotatePoint(points[4], pos, angle);
+        points[5] = RotatePoint(points[5], pos, angle);
+        points[6] = RotatePoint(points[6], pos, angle);
+        points[7] = RotatePoint(points[7], pos, angle);
+
+        DrawLine(points[0], points[1], color);
+        DrawLine(points[0], points[2], color);
+        DrawLine(points[2], points[3], color);
+        DrawLine(points[3], points[1], color);
+
+        DrawLine(points[4], points[5], color);
+        DrawLine(points[4], points[6], color);
+        DrawLine(points[6], points[7], color);
+        DrawLine(points[7], points[5], color);
+
+        DrawLine(points[0], points[4], color);
+        DrawLine(points[1], points[5], color);
+        DrawLine(points[2], points[6], color);
+        DrawLine(points[3], points[7], color);
+
     }
     #endregion
 }

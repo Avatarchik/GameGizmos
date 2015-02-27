@@ -1,7 +1,7 @@
 ﻿Shader "Unlit/VertexColor" {
 
 Category {
-	Tags { "Queue"="Overlay" }
+	
 	Lighting Off
 	ZWrite Off
 	BindChannels {
@@ -11,7 +11,8 @@ Category {
 	}
 
 	SubShader {
-		Tags { "Queue"="Overlay" }
+		ZTest Always
+		Tags { "Queue"="Overlay"}
 		Pass {
 			SetTexture [_MainTex] {
 				combine primary
