@@ -23,16 +23,16 @@ public class GameGizmos : MonoBehaviour {
         private set { _I = value; }
     }
 
-    public Color defaultColor = Color.white;
+    public Color DefaultColor = Color.white;
 
     #region Private
-    private Mesh mesh;
-    private MeshFilter meshFilter;
-    private MeshRenderer meshRenderer;
+    private Mesh _mesh;
+    private MeshFilter _meshFilter;
+    private MeshRenderer _meshRenderer;
 
-    private List<Vector3> dVerts = new List<Vector3>();
-    private List<int> dIndices = new List<int>();
-    private List<Color32> dColors32 = new List<Color32>();
+    private readonly List<Vector3> _dVerts = new List<Vector3>();
+    private readonly List<int> _dIndices = new List<int>();
+    private readonly List<Color32> _dColors32 = new List<Color32>();
     #endregion
 
     #region MonoBehaviour
@@ -43,9 +43,6 @@ public class GameGizmos : MonoBehaviour {
         PopulateMesh();
         ZeroTransform();
     }
-    void FixedUpdate() {
-        
-    }
     void OnRenderObject() {
         ClearEverything();
     }
@@ -53,42 +50,36 @@ public class GameGizmos : MonoBehaviour {
 
     void Init() {
         transform.name = "GameGizmos";
-        meshFilter = gameObject.AddComponent<MeshFilter>();
-        meshRenderer = gameObject.AddComponent<MeshRenderer>();
-        mesh = new Mesh() { name = "GameGizmos_Mesh" };
-        meshFilter.mesh = mesh;
-        mesh.MarkDynamic();
-        meshRenderer.material = new Material(Shader.Find("Unlit/VertexColor"));
+        _meshFilter = gameObject.AddComponent<MeshFilter>();
+        _meshRenderer = gameObject.AddComponent<MeshRenderer>();
+        _mesh = new Mesh { name = "GameGizmos_Mesh" };
+        _meshFilter.mesh = _mesh;
+        _mesh.MarkDynamic();
+        _meshRenderer.material = new Material(Shader.Find("Unlit/VertexColor"));
     }
     void PopulateMesh() {
-        mesh.vertices = dVerts.ToArray();
-        mesh.SetIndices(dIndices.ToArray(), MeshTopology.Lines, 0);
-        mesh.colors32 = dColors32.ToArray();
+        _mesh.vertices = _dVerts.ToArray();
+        _mesh.SetIndices(_dIndices.ToArray(), MeshTopology.Lines, 0);
+        _mesh.colors32 = _dColors32.ToArray();
     }
     void ClearEverything() {
-        mesh.Clear();
-        dVerts.Clear();
-        dIndices.Clear();
-        dColors32.Clear();
+        _mesh.Clear();
+        _dVerts.Clear();
+        _dIndices.Clear();
+        _dColors32.Clear();
     }
     void ZeroTransform() {
         transform.position = Vector3.zero;
         transform.rotation = Quaternion.identity;
         transform.localScale = Vector3.one;
     }
-    void Put(IEnumerable<Vector3> verts, IEnumerable<Color32> colors)
-    {
-        //dVerts = dVerts.Concat(verts).ToList();
-        foreach (Vector3 v in verts) {
-            dVerts.Add(v);
+    void Put(IEnumerable<Vector3> verts, IEnumerable<Color32> colors) {
+        foreach (var v in verts) {
+            _dVerts.Add(v);
+            _dIndices.Add(_dIndices.Count);
         }
-        for (int i = 0; i < verts.Count(); i++)
-        {
-            dIndices.Add(dIndices.Count);
-        }
-        //dColors32 = dColors32.Concat(colors).ToList();
-        foreach (Color32 c in colors) {
-            dColors32.Add(c);
+        foreach (var c in colors) {
+            _dColors32.Add(c);
         }
     }
     static Vector3 RotatePoint(Vector3 point, Vector3 pivot, Vector3 angle)
@@ -99,21 +90,21 @@ public class GameGizmos : MonoBehaviour {
         return point;
     }
 
-    private static List<Vector3> _putlist = new List<Vector3>();
-    private static List<Color32> _putlistc = new List<Color32>();
+    private static readonly List<Vector3> _putListVerts = new List<Vector3>();
+    private static readonly List<Color32> _putListColors = new List<Color32>();
     #region Draw
     public static void DrawLine(Vector3 from, Vector3 to) {
-        DrawLine(from, to, I.defaultColor);
+        DrawLine(from, to, I.DefaultColor);
     }
     public static void DrawLine(Vector3 from, Vector3 to, Color32 color) {
         //I.Put(new List<Vector3>() { from, to }, new List<Color32>() {color, color });
-        _putlist.Clear(); _putlist.Add(from); _putlist.Add(to);
-        _putlistc.Clear(); _putlistc.Add(color); _putlistc.Add(color);
-        I.Put(_putlist, _putlistc);
+        _putListVerts.Clear(); _putListVerts.Add(from); _putListVerts.Add(to);
+        _putListColors.Clear(); _putListColors.Add(color); _putListColors.Add(color);
+        I.Put(_putListVerts, _putListColors);
     }
 
     public static void DrawRect(Vector3 pos, Vector3 size) {
-        DrawRect(pos, size, I.defaultColor, Vector3.zero);
+        DrawRect(pos, size, I.DefaultColor, Vector3.zero);
     }
     public static void DrawRect(Vector3 pos, Vector3 size, Color32 color) {
         DrawRect(pos, size, color, Vector3.zero);
@@ -138,7 +129,7 @@ public class GameGizmos : MonoBehaviour {
     }
 
     public static void DrawCube(Vector3 pos, Vector3 size) {
-        DrawCube(pos, size, I.defaultColor, Vector3.zero);
+        DrawCube(pos, size, I.DefaultColor, Vector3.zero);
     }
     public static void DrawCube(Vector3 pos, Vector3 size, Color32 color) {
         DrawCube(pos, size, color, Vector3.zero);
