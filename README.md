@@ -8,6 +8,8 @@ GameGizmos is an utility class for drawing gizmo-like objects during runtime of 
 * Lines
 * Rectangles
 * Cubes
+* Circles
+* Spheres
 
 ## Usage
 Put the 'GameGizmos' folder in your Unity asset folder. To draw a gizmo, simply call one or more of the static functions within the class. No other setup is required.
@@ -23,6 +25,7 @@ GameGizmos.DrawCube(transform.position, transform.localScale, Color.blue, transf
 * [Vector3 point rotation](http://answers.unity3d.com/questions/532297/rotate-a-vector-around-a-certain-point.html)
 
 ## Changelog
+* [28/02/2015] - (12 hours later) A small rewrite, added circle and sphere shape, added basic commentary(lets play GameGizmos), further optimizations are planned
 * [28/02/2015] - (soon after) A bit more optimization, little update (like a small puppy)
 * [28/02/2015] - Made stuff a little more GC friendly, thus increasing performance
 * [27/02/2015] - (later that day) Added cube shape, changed shader to draw gizmos on top of everything
