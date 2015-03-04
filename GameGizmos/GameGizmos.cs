@@ -1,10 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
+// GameGizmos.cs
+// https://github.com/SlateNeon/GameGizmos
+// Last Edit: 2015-03-05
+
 public class GameGizmos : MonoBehaviour {
     private static GameGizmos _I;
     /// <summary>
-    /// Singleton instance of GameGizmos, do not use unless you are educated in the matters of elite gizmoing
+    /// Singleton instance
     /// </summary>
     public static GameGizmos I {
         get {
@@ -254,13 +258,21 @@ public class GameGizmos : MonoBehaviour {
 
     }
 
-    public static void DrawCircle(Vector3 pos, float radius, Color32 color, Vector3 angle, int detail = 8)
+    /// <summary>
+    /// Draws a circle that is lying flat on ground plane by default
+    /// </summary>
+    /// <param name="pos">Position in world space</param>
+    /// <param name="diameter">Diameter of the circle</param>
+    /// <param name="color">Color of the circle</param>
+    /// <param name="angle">Euler angles rotation</param>
+    /// <param name="detail">Amount of detail in the circle, more makes it smoother</param>
+    public static void DrawCircle(Vector3 pos, float diameter, Color32 color, Vector3 angle, int detail = 8)
     {
         float step = 360f / detail;
         Vector3[] points = new Vector3[detail];
         for (var i = 0; i < detail; i++)
         {
-            points[i] = RotatePoint(new Vector3(pos.x, pos.y, pos.z + radius), pos, new Vector3(0, step * i, 0));
+            points[i] = RotatePoint(new Vector3(pos.x, pos.y, pos.z + (diameter/2)), pos, new Vector3(0, step * i, 0));
             points[i] = RotatePoint(points[i], pos, angle);
             if (i > 0 && i < detail - 1)
             {
@@ -274,10 +286,23 @@ public class GameGizmos : MonoBehaviour {
 
         }
     }
-    public static void DrawSphere(Vector3 pos, float radius, Color32 color, Vector3 angle, int detail = 8)
+
+    /// <summary>
+    /// Draws a sphere
+    /// </summary>
+    /// <param name="pos"></param>
+    /// <param name="diameter"></param>
+    /// <param name="color"></param>
+    /// <param name="angle"></param>
+    /// <param name="detail"></param>
+    public static void DrawSphere(Vector3 pos, float diameter, Color32 color, Vector3 angle, int detail = 8)
     {
-        DrawCircle(pos, radius, color, Vector3.zero, detail);
-        DrawCircle(pos, radius, color, new Vector3(90,0,0), detail);
-        DrawCircle(pos, radius, color, new Vector3(0, 0, 90), detail);
+        Vector3 n = Quaternion.Euler(angle) * Vector3.forward;  //normal direction of angle for 3rd axis
+        DrawCircle(pos, diameter, color, angle, detail);
+        DrawCircle(pos, diameter, color, new Vector3(angle.x, angle.y, angle.z+90), detail);
+        DrawCircle(pos, diameter, color, Quaternion.FromToRotation(Vector3.up, n).eulerAngles, detail);
+
+        
+
     }
 }

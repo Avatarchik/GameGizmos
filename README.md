@@ -25,8 +25,9 @@ GameGizmos.DrawCube(transform.position, transform.localScale, Color.blue, transf
 * [Vector3 point rotation](http://answers.unity3d.com/questions/532297/rotate-a-vector-around-a-certain-point.html)
 
 ## Changelog
-* [28/02/2015] - (12 hours later) A small rewrite, added circle and sphere shape, added basic commentary(lets play GameGizmos), further optimizations are planned
-* [28/02/2015] - (soon after) A bit more optimization, little update (like a small puppy)
-* [28/02/2015] - Made stuff a little more GC friendly, thus increasing performance
-* [27/02/2015] - (later that day) Added cube shape, changed shader to draw gizmos on top of everything
-* [27/02/2015] - Release
+* [05/03/15] - Fixed sphere gizmo
+* [28/02/15] - (12 hours later) A small rewrite, added circle and sphere shape, added basic commentary(lets play GameGizmos), further optimizations are planned
+* [28/02/15] - (soon after) A bit more optimization, little update (like a small puppy)
+* [28/02/15] - Made stuff a little more GC friendly, thus increasing performance
+* [27/02/15] - (later that day) Added cube shape, changed shader to draw gizmos on top of everything
+* [27/02/15] - Release
