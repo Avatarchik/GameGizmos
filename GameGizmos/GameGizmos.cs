@@ -44,7 +44,7 @@ public class GameGizmos : MonoBehaviour {
         _mesh = new Mesh { name = "GameGizmos_Mesh" };
         _mFilter.mesh = _mesh;
         _mesh.MarkDynamic();
-        _mRenderer.material = new Material(Shader.Find("Unlit/VertexColor"));
+        _mRenderer.material = new Material(_shaderText);
     }
     /// <summary>
     /// Populates mesh with data from temporary storage
@@ -302,7 +302,33 @@ public class GameGizmos : MonoBehaviour {
         DrawCircle(pos, diameter, color, new Vector3(angle.x, angle.y, angle.z+90), detail);
         DrawCircle(pos, diameter, color, Quaternion.FromToRotation(Vector3.up, n).eulerAngles, detail);
 
-        
+
 
     }
+
+    #region SHADER
+    private string _shaderText = "Shader \"Unlit/VertexColor\" {\n" +
+        "\n" +
+        "Category {\n" +
+        "\t\n" +
+        "\tLighting Off\n" +
+        "\tZWrite Off\n" + 
+        "\tBindChannels {\n" +
+        "\t\tBind \"Color\", color\n" +
+        "\t\tBind \"Vertex\", vertex\n" +
+        "\t\tBind \"TexCoord\", texcoord\n" +
+        "\t}\n" +
+        "\n" +
+        "\tSubShader {\n" +
+        "\t\tZTest Always\n" + //remove this for depth support(so it doesn't draw on top)
+        "\t\tTags { \"Queue\"=\"Overlay\"}\n" +
+        "\t\tPass {\n" +
+        "\t\t\tSetTexture [_MainTex] {\n" +
+        "\t\t\t\tcombine primary\n" +
+        "\t\t\t}\n" +
+        "\t\t}\n" +
+        "\t}\n" +
+        "}\n" +
+        "}";
+    #endregion
 }
