@@ -3,9 +3,11 @@ using System.Collections.Generic;
 
 // GameGizmos.cs
 // https://github.com/SlateNeon/GameGizmos
-// Last Edit: 2015-03-05
+// Last Edit: 2015-03-06
 
-public class GameGizmos : MonoBehaviour {
+public class GameGizmos : MonoBehaviour
+{
+    #region SINGLETON
     private static GameGizmos _I;
     /// <summary>
     /// Singleton instance
@@ -17,7 +19,11 @@ public class GameGizmos : MonoBehaviour {
             return _I;
         }
     }
+    #endregion
 
+    /// <summary>
+    /// The gizmo color if no other color is provided
+    /// </summary>
     public Color32 DefaultColor = Color.white;
 
     private Transform _t;
@@ -82,6 +88,7 @@ public class GameGizmos : MonoBehaviour {
     /// <param name="colors">Colors for vertices, must match verts count</param>
     public void Put(IEnumerable<Vector3> verts, IEnumerable<Color32> colors)
     {
+        if (!enabled) return;   //if gizmos are off, dont put anything
         foreach (var v in verts)
         {
             _dVerts.Add(v);
@@ -98,17 +105,27 @@ public class GameGizmos : MonoBehaviour {
     {
         Init();
     }
+
+    private bool _wasRendered = false;
     void OnWillRenderObject()
     {
+        if(_wasRendered) return;
         PopulateMesh();
         ZeroTransform();
+        _wasRendered = true;
     }
+
     void OnRenderObject()
     {
+        if(Camera.current != Camera.main) return;   //if the camera that rendered wasn't main, keep mesh until main renders it (this is done to prevent flicker)
+
         ClearEverything(); //clears data after render is complete
+        _wasRendered = false;
     }
+
     #endregion
 
+    #region STATIC
     /// <summary>
     /// Rotates a point in space around pivot by angles
     /// </summary>
@@ -305,6 +322,7 @@ public class GameGizmos : MonoBehaviour {
 
 
     }
+    #endregion
 
     #region SHADER
     private string _shaderText = "Shader \"Unlit/VertexColor\" {\n" +

@@ -6,7 +6,7 @@ GameGizmos is a tool written in C# for Unity3D engine. The purpose of this tool 
 Unlike Debug or Gizmos class in Unity3D, this tool does not require editor to see the gizmos it produces.
 This implementation does not use GL lines class and instead creates the lines by using meshes with MeshTopology set to lines.
 
-### Shapes
+## Shapes
 * Line
 * Rectangle
 * Cube
@@ -33,6 +33,7 @@ Place GameGizmos.cs inside your project folder
 * [Vector3 point rotation](http://answers.unity3d.com/questions/532297/rotate-a-vector-around-a-certain-point.html)
 
 ## Changelog
+* [06/03/15] - Fixed flickering caused by reflection probes/multiple cameras
 * [05/03/15] - (after sleep) Integrated shader into script itself. Otherwise shader would have to be manually included which makes script less portable
 * [05/03/15] - Fixed sphere gizmo
 * [28/02/15] - (12 hours later) A small rewrite, added circle and sphere shape, added basic commentary(lets play GameGizmos), further optimizations are planned
