@@ -25,7 +25,8 @@ Place GameGizmos.cs inside your project folder
 * [???] Desktop Linux
 * [???] Desktop OSX
 * [YES] WebPlayer
-* [???] Mobile Android
+* [YES] HTML5 WebGL
+* [YES] Mobile Android
 * [???] Mobile iOS
 
 ## Credits
@@ -33,6 +34,7 @@ Place GameGizmos.cs inside your project folder
 * [Vector3 point rotation](http://answers.unity3d.com/questions/532297/rotate-a-vector-around-a-certain-point.html)
 
 ## Changelog
+* [08/03/15] - Rewrite to support line linking, resulting in ~20% performance gain for many shapes
 * [06/03/15] - Fixed flickering caused by reflection probes/multiple cameras
 * [05/03/15] - (after sleep) Integrated shader into script itself. Otherwise shader would have to be manually included which makes script less portable
 * [05/03/15] - Fixed sphere gizmo
