@@ -235,17 +235,6 @@ public static class GizmoShapes
     #region RECTANGLES
     public static void DrawRect(Vector3[] points, Color32 color)
     {
-        //Vector3[] points = new Vector3[4];
-        //points[0] = new Vector3(pos.x + size.x / 2, pos.y, pos.z + size.y / 2);
-        //points[1] = new Vector3(pos.x + size.x / 2, pos.y, pos.z - size.y / 2);
-        //points[2] = new Vector3(pos.x - size.x / 2, pos.y, pos.z + size.y / 2);
-        //points[3] = new Vector3(pos.x - size.x / 2, pos.y, pos.z - size.y / 2);
-
-        //points[0] = RotatePoint(points[0], pos, angle);
-        //points[1] = RotatePoint(points[1], pos, angle);
-        //points[2] = RotatePoint(points[2], pos, angle);
-        //points[3] = RotatePoint(points[3], pos, angle);
-
         DrawLine(new List<Vector3>() { points[0], points[1], points[2], points[3] }, color, true);
     }
 
@@ -353,13 +342,19 @@ public static class GizmoShapes
     /// <param name="pivot">Pivot/center to rotate around</param>
     /// <param name="angle">Angle by which to rotate</param>
     /// <returns></returns>
-    private static Vector3 RotatePoint(Vector3 point, Vector3 pivot, Vector3 angle)
+    public static Vector3 RotatePoint(Vector3 point, Vector3 pivot, Vector3 angle)
     {
         var dir = point - pivot;
         dir = Quaternion.Euler(angle) * dir;
         point = dir + pivot;
         return point;
     }
+
+    public static Vector3 RotateNormalToEuler(Vector3 normal)
+    {
+        return Quaternion.FromToRotation(Vector3.up, normal).eulerAngles;
+    }
+
     #endregion
 
     // Add:
